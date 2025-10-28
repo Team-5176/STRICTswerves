@@ -5,22 +5,12 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import java.io.File;
 import swervelib.SwerveInputStream;
 
 /**
@@ -41,28 +31,29 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
+    drivebase.setDefaultCommand(driveFieldOrientedVelocity);
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
 
-  SwerveInputStream driveAngularVelocity = new SwerveInputStream.of(drivebase.getSwerveDrive(),
-                                                                    () -> m_driverController.getLeftY() * -1.0,
-                                                                    () -> m_driverController.getLeftX() * -1.0)
-                                                                    .withControllerHeadingAxis(m_driverController::getRightX)
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+                                                                    () -> driverXbox.getLeftY() * -1.0,
+                                                                    () -> driverXbox.getLeftX() * -1.0)
+                                                                    .withControllerRotationAxis(driverXbox::getRightX)
                                                                     .deadband(OperatorConstants.DEADBAND)
-                                                                    .scaleTranslation(0.8),
+                                                                    .scaleTranslation(0.8)
                                                                     .allianceRelativeControl(true);
+  SwerveInputStream driveDirectAngle = driveAngularVelocity.copy()
+                                                           .withControllerHeadingAxis(driverXbox::getRightX,
+                                                                                      driverXbox::getRightY)
+                                                           .headingWhile(true);
+  Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
+
+  Command driveFieldOrientedVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
 
   private void configureBindings()
-  {
-    
+  {}
 
-  }
-
-  public void setMotorBrake(boolean brake)
-  {
-    drivebase.setMotorBrake(brake);
-  }
 }
 
 
