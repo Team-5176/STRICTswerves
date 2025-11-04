@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -23,7 +24,7 @@ public class RobotContainer
   SwerveSubsystem drivebase = new SwerveSubsystem();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  final         CommandXboxController driverXbox = new CommandXboxController(0);
+  private final CommandXboxController driverXbox = new CommandXboxController(0);
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -31,7 +32,7 @@ public class RobotContainer
   {
     // Configure the trigger bindings
     configureBindings();
-    drivebase.setDefaultCommand(driveFieldOrientedVelocity);
+    drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
     DriverStation.silenceJoystickConnectionWarning(true);
     NamedCommands.registerCommand("test", Commands.print("I EXIST"));
   }
@@ -47,10 +48,10 @@ public class RobotContainer
                                                            .withControllerHeadingAxis(driverXbox::getRightX,
                                                                                       driverXbox::getRightY)
                                                            .headingWhile(true);
+
   Command driveFieldOrientedDirectAngle = drivebase.driveFieldOriented(driveDirectAngle);
-
-  Command driveFieldOrientedVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
-
+  Command driveFieldOrientedAngularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+  
   private void configureBindings()
   {}
 

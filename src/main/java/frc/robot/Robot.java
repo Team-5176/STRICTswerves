@@ -21,6 +21,8 @@ public class Robot extends TimedRobot
   private static Robot   instance;
   private        Command m_autonomousCommand;
 
+
+  @SuppressWarnings("unused")
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
