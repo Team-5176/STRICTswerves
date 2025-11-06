@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import swervelib.parser.SwerveParser;
+import swervelib.telemetry.SwerveDriveTelemetry;
+import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 import swervelib.SwerveDrive;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -36,6 +38,8 @@ public class SwerveSubsystem extends SubsystemBase
       } catch (Exception e) {
         throw new RuntimeException(e);
       }
+    
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
   }
 
   public SwerveDrive getSwerveDrive() {
