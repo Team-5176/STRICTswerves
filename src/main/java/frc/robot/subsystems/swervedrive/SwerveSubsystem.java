@@ -21,7 +21,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
-// github practice
+
 public class SwerveSubsystem extends SubsystemBase
 {
   File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(),"swerve");
