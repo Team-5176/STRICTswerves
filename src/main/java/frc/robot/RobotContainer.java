@@ -48,7 +48,8 @@ public class RobotContainer
                                                                                  // This auto has only a path that will drive forward 0.5M from the start line
                                                                                  // The usingPathPlanner boolean must be set to true for this auto to run
 
-    SmartDashboard.putData("Auto Chooser", autoChooser); 
+    SmartDashboard.putData("Auto Chooser", autoChooser);
+    drivebase.zeroGyroWithAlliance();
   }
 
 
