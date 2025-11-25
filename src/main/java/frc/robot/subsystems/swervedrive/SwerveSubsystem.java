@@ -62,10 +62,7 @@ public class SwerveSubsystem extends SubsystemBase
     });
   }
 
-  public ChassisSpeeds getRobotVelocity() {
-    return swerveDrive.getRobotVelocity();
-  }
-  
+
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
@@ -109,6 +106,11 @@ public class SwerveSubsystem extends SubsystemBase
     public Pose2d getPose() {
       return swerveDrive.getPose();
     }
+
+
+    public ChassisSpeeds getRobotVelocity() {
+      return swerveDrive.getRobotVelocity();
+    }  
 
   /**
    * Setup AutoBuilder for PathPlanner.
